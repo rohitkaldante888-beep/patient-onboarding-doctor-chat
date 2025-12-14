@@ -1,1 +1,88 @@
-<p>step3-personal works!</p>
+<div class="max-w-3xl mx-auto bg-white shadow rounded p-6">
+
+  <h2 class="text-2xl font-semibold mb-6">Step 3: Insurance & Preferences</h2>
+
+  <form [formGroup]="insuranceForm" class="space-y-5">
+
+    <!-- Insurance Provider -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Insurance Provider *</label>
+      <input formControlName="insurance_provider"
+             class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
+    </div>
+
+    <!-- Insurance ID -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Insurance ID *</label>
+      <input formControlName="insurance_id"
+             class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
+    </div>
+
+    <!-- Policy Holder Name -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Policy Holder Name *</label>
+      <input formControlName="policy_holder_name"
+             class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
+    </div>
+
+    <!-- Preferred Doctor -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Preferred Doctor *</label>
+      <select formControlName="preferred_doctor"
+              class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500">
+        <option value="">Select doctor</option>
+        <option *ngFor="let d of doctors" [value]="d.id">
+          {{ d.full_name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Preferred Time Slot -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Preferred Time Slot</label>
+      <div class="flex gap-4">
+        <label *ngFor="let slot of timeSlots" class="flex items-center gap-2">
+          <input type="radio"
+                 formControlName="preferred_time_slot"
+                 [value]="slot">
+          <span>{{ slot }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Referral Source -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Referral Source</label>
+      <select formControlName="referral_source"
+              class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500">
+        <option value="">Select</option>
+        <option *ngFor="let r of referralSources" [value]="r">{{ r }}</option>
+      </select>
+    </div>
+
+    <!-- Additional Notes -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Additional Notes</label>
+      <textarea formControlName="additional_notes"
+                rows="3"
+                maxlength="200"
+                class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"></textarea>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between pt-4">
+      <button type="button"
+              (click)="back()"
+              class="px-5 py-2 border rounded hover:bg-gray-100">
+        Back
+      </button>
+
+      <button type="button"
+              (click)="submit()"
+              class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+        Submit & Finish
+      </button>
+    </div>
+
+  </form>
+</div>

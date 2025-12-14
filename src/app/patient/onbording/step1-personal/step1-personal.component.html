@@ -1,1 +1,57 @@
-<p>step1-personal works!</p>
+<div class="max-w-3xl mx-auto bg-white shadow-md rounded p-6">
+
+  <h2 class="text-2xl font-semibold mb-6">Step 1: Personal Information</h2>
+
+  <form [formGroup]="personalForm" class="space-y-4">
+
+    <!-- Full Name -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Full Name <span class="text-red-500">*</span></label>
+      <input formControlName="full_name" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
+      <p *ngIf="personalForm.get('full_name')?.touched && personalForm.get('full_name')?.invalid" class="text-red-500 text-sm">Please enter at least 2 characters</p>
+    </div>
+
+    <!-- Date of Birth -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Date of Birth <span class="text-red-500">*</span></label>
+      <input type="date" formControlName="dob" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
+      <p *ngIf="personalForm.get('dob')?.touched && personalForm.get('dob')?.invalid" class="text-red-500 text-sm">Date of birth is required</p>
+    </div>
+
+    <!-- Gender -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Gender</label>
+      <select formControlName="gender" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500">
+        <option value="">Select</option>
+        <option *ngFor="let g of genders" [value]="g">{{ g }}</option>
+      </select>
+    </div>
+
+    <!-- Phone -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Phone <span class="text-red-500">*</span></label>
+      <input formControlName="phone" placeholder="1234567890" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
+      <p *ngIf="personalForm.get('phone')?.touched && personalForm.get('phone')?.invalid" class="text-red-500 text-sm">Enter a valid 10-digit number</p>
+    </div>
+
+    <!-- Emergency Contact Name -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Emergency Contact Name <span class="text-red-500">*</span></label>
+      <input formControlName="emergency_contact_name" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
+      <p *ngIf="personalForm.get('emergency_contact_name')?.touched && personalForm.get('emergency_contact_name')?.invalid" class="text-red-500 text-sm">Required</p>
+    </div>
+
+    <!-- Emergency Contact Phone -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Emergency Contact Phone <span class="text-red-500">*</span></label>
+      <input formControlName="emergency_contact_phone" placeholder="1234567890" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"/>
+      <p *ngIf="personalForm.get('emergency_contact_phone')?.touched && personalForm.get('emergency_contact_phone')?.invalid" class="text-red-500 text-sm">Enter valid 10-digit number</p>
+    </div>
+
+    <!-- Button -->
+    <div class="flex justify-end mt-4">
+      <button type="button" (click)="saveAndNext()" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Save & Continue</button>
+    </div>
+
+  </form>
+</div>

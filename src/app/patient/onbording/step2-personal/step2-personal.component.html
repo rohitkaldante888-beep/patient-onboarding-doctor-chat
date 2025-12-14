@@ -1,1 +1,88 @@
-<p>step2-personal works!</p>
+<div class="max-w-3xl mx-auto bg-white shadow rounded p-6">
+
+  <h2 class="text-2xl font-semibold mb-6">Step 2: Medical Information</h2>
+
+  <form [formGroup]="medicalForm" class="space-y-5">
+
+    <!-- Blood Type -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Blood Type</label>
+      <select formControlName="blood_type"
+              class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500">
+        <option value="">Select</option>
+        <option *ngFor="let b of bloodTypes" [value]="b">{{ b }}</option>
+      </select>
+    </div>
+
+    <!-- Current Medications -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Current Medications</label>
+      <textarea formControlName="current_medications"
+                rows="3"
+                maxlength="500"
+                class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                placeholder="List medications (if any)"></textarea>
+    </div>
+
+    <!-- Known Allergies -->
+    <div>
+      <label class="block text-sm font-medium mb-2">Known Allergies</label>
+      <div class="grid grid-cols-2 gap-2">
+        <label *ngFor="let allergy of allergies" class="flex items-center space-x-2">
+          <input type="checkbox"
+                 (change)="toggleArrayValue('known_allergies', allergy)"
+                 [checked]="medicalForm.value.known_allergies?.includes(allergy)">
+          <span>{{ allergy }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Chronic Conditions -->
+    <div>
+      <label class="block text-sm font-medium mb-2">Chronic Conditions</label>
+      <div class="grid grid-cols-2 gap-2">
+        <label *ngFor="let condition of chronicConditions" class="flex items-center space-x-2">
+          <input type="checkbox"
+                 (change)="toggleArrayValue('chronic_conditions', condition)"
+                 [checked]="medicalForm.value.chronic_conditions?.includes(condition)">
+          <span>{{ condition }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Previous Surgeries -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Previous Surgeries</label>
+      <textarea formControlName="previous_surgeries"
+                rows="2"
+                class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                placeholder="Describe if any"></textarea>
+    </div>
+
+    <!-- Family Medical History -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Family Medical History</label>
+      <textarea formControlName="family_medical_history"
+                rows="2"
+                maxlength="300"
+                class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                placeholder="Optional"></textarea>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between pt-4">
+      <button type="button"
+              (click)="back()"
+              class="px-5 py-2 border rounded hover:bg-gray-100">
+        Back
+      </button>
+
+      <button type="button"
+              (click)="saveAndNext()"
+              class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        Save & Continue
+      </button>
+    </div>
+
+  </form>
+</div>

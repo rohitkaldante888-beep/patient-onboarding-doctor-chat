@@ -7,6 +7,9 @@ import { Step2PersonalComponent } from './onbording/step2-personal/step2-persona
 import { Step3PersonalComponent } from './onbording/step3-personal/step3-personal.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutPatientComponent } from './layout-patient/layout-patient.component';
+import { OnboardingLayoutComponent } from './onbording/onboarding-layout/onboarding-layout.component';
+import { StepperComponent } from '../shared/stepper/stepper.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,11 +18,14 @@ import { LayoutPatientComponent } from './layout-patient/layout-patient.componen
     Step2PersonalComponent,
     Step3PersonalComponent,
     DashboardComponent,
-    LayoutPatientComponent
+    LayoutPatientComponent,
+    OnboardingLayoutComponent,
+    StepperComponent
   ],
   imports: [
     CommonModule,
-    PatientRoutingModule
+    PatientRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class PatientModule { }
