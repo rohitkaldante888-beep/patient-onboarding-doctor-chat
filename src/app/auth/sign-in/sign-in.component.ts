@@ -8,11 +8,10 @@ import { AuthService } from '../../core/services/auth.service';
   templateUrl: './sign-in.component.html'
 })
 export class SignInComponent implements OnInit {
-
   signInForm!: FormGroup;
   loading = false;
   errorMsg = '';
-  showPassword = false; // 👈 add this
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -23,7 +22,7 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
     this.signInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
@@ -39,18 +38,28 @@ export class SignInComponent implements OnInit {
 
     this.authService.signIn(this.signInForm.value).subscribe({
       next: (res: any) => {
-        localStorage.setItem('token', res.token);
+        const user = res.user; // updated to match backend
+        const role = user.role;
+        const status = user.onboardingStatus;
 
-        if (res.onboardingStatus === 'completed') {
-          this.router.navigate(['/patient/dashboard']);
-        } else {
-          this.router.navigate([`/patient/onboarding/${res.onboardingStatus}`]);
+        if (role === 'PATIENT') {
+          if (status === 'completed') {
+            this.router.navigate(['/patient/dashboard']);
+          } else {
+            this.router.navigate(['/patient/onboarding/step1']);
+          }
         }
+
+        if (role === 'DOCTOR') {
+          this.router.navigate(['/doctor/dashboard']);
+        }
+
+        this.loading = false;
       },
       error: (err) => {
-        this.errorMsg = err.error?.error || 'Login failed';
+        this.errorMsg = err.error?.error || 'Invalid email or password';
         this.loading = false;
-      }
+      },
     });
   }
 }

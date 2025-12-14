@@ -13,9 +13,14 @@ const routes: Routes = [
     path: '',
     component: LayoutPatientComponent,
     canActivate: [authGuard],
-    data: { role: 'PATIENT' },
+    canActivateChild: [authGuard],
+    data: { roles: ['PATIENT'] },
     children: [
-      { path: 'dashboard', component: DashboardComponent },
+
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
 
       {
         path: 'onboarding',
@@ -27,7 +32,12 @@ const routes: Routes = [
           { path: '', redirectTo: 'step1', pathMatch: 'full' }
         ]
       },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      }
     ]
   }
 ];

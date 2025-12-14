@@ -6,6 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./stepper.component.scss']
 })
 export class StepperComponent {
-  // Ensure StepperComponent is only declared in one module
-    @Input() currentStep = 1;
+  @Input() currentStep = 1;
 }
