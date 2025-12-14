@@ -10,6 +10,7 @@ import { LayoutPatientComponent } from './layout-patient/layout-patient.componen
 import { OnboardingLayoutComponent } from './onbording/onboarding-layout/onboarding-layout.component';
 import { StepperComponent } from '../shared/stepper/stepper.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -20,12 +21,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     LayoutPatientComponent,
     OnboardingLayoutComponent,
-    StepperComponent
   ],
   imports: [
     CommonModule,
     PatientRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class PatientModule { }

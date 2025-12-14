@@ -23,8 +23,8 @@ export class AuthService {
 
   private setSession(res: any) {
     localStorage.setItem('token', res.token);
-    localStorage.setItem('role', res.role);
-    localStorage.setItem('patientId', res.patientId);
+    localStorage.setItem('role', res.user.role);
+    localStorage.setItem('patientId', res.user.patientId);
   }
 
   getToken(): string | null {
