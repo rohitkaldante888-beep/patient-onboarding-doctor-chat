@@ -1,1 +1,105 @@
-<p>sign-in works!</p>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100">
+  <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+
+    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-2">
+      Patient / Doctor Login
+    </h2>
+    <p class="text-center text-sm text-gray-500 mb-6">
+      Sign in to continue
+    </p>
+
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="space-y-5">
+
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Email
+        </label>
+        <input
+          type="email"
+          formControlName="email"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="patient@test.com"
+        />
+        <p
+          *ngIf="signInForm.get('email')?.touched && signInForm.get('email')?.invalid"
+          class="text-xs text-red-500 mt-1"
+        >
+          Enter a valid email
+        </p>
+      </div>
+
+      <!-- Password with toggle -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Password
+        </label>
+
+        <div class="relative">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            class="w-full px-4 py-2 border rounded-lg pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="********"
+          />
+
+          <!-- Toggle Button -->
+          <button
+            type="button"
+            (click)="togglePassword()"
+            class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-600"
+          >
+            <!-- Eye -->
+            <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7
+                -1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+
+            <!-- Eye Off -->
+            <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7
+                a9.956 9.956 0 012.042-3.368M6.223 6.223A9.955 9.955 0 0112 5
+                c4.478 0 8.268 2.943 9.542 7a9.956 9.956 0 01-4.043 5.132M15 12
+                a3 3 0 00-4.243-2.829M3 3l18 18" />
+            </svg>
+          </button>
+        </div>
+
+        <p
+          *ngIf="signInForm.get('password')?.touched && signInForm.get('password')?.invalid"
+          class="text-xs text-red-500 mt-1"
+        >
+          Password must be at least 8 characters
+        </p>
+      </div>
+
+      <!-- Error -->
+      <p *ngIf="errorMsg" class="text-red-500 text-sm text-center">
+        {{ errorMsg }}
+      </p>
+
+      <!-- Button -->
+      <button
+        type="submit"
+        [disabled]="loading"
+        class="w-full bg-blue-600 text-white py-2 rounded-lg font-medium
+               hover:bg-blue-700 disabled:opacity-60 transition"
+      >
+        {{ loading ? 'Signing in...' : 'Sign In' }}
+      </button>
+
+    </form>
+     <p class="text-center text-sm text-gray-500">
+        Already have an account?
+        <a routerLink="/auth/sign-up" class="text-blue-600 hover:underline">
+          Sign Up
+        </a>
+      </p>
+  </div>
+</div>
