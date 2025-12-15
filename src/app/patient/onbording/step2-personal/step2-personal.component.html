@@ -1,88 +1,214 @@
-<div class="max-w-3xl mx-auto bg-white shadow rounded p-6">
-
-  <h2 class="text-2xl font-semibold mb-6">Step 2: Medical Information</h2>
-
-  <form [formGroup]="medicalForm" class="space-y-5">
-
-    <!-- Blood Type -->
-    <div>
-      <label class="block text-sm font-medium mb-1">Blood Type</label>
-      <select formControlName="blood_type"
-              class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500">
-        <option value="">Select</option>
-        <option *ngFor="let b of bloodTypes" [value]="b">{{ b }}</option>
-      </select>
-    </div>
-
-    <!-- Current Medications -->
-    <div>
-      <label class="block text-sm font-medium mb-1">Current Medications</label>
-      <textarea formControlName="current_medications"
-                rows="3"
-                maxlength="500"
-                class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
-                placeholder="List medications (if any)"></textarea>
-    </div>
-
-    <!-- Known Allergies -->
-    <div>
-      <label class="block text-sm font-medium mb-2">Known Allergies</label>
-      <div class="grid grid-cols-2 gap-2">
-        <label *ngFor="let allergy of allergies" class="flex items-center space-x-2">
-          <input type="checkbox"
-                 (change)="toggleArrayValue('known_allergies', allergy)"
-                 [checked]="medicalForm.value.known_allergies?.includes(allergy)">
-          <span>{{ allergy }}</span>
-        </label>
+<!-- step2.component.html -->
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-12 px-4">
+  <div class="max-w-3xl mx-auto">
+    
+    <!-- Progress Bar -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-indigo-600">Step 2 of 3</span>
+        <span class="text-sm text-gray-500">Medical Information</span>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-2">
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full transition-all duration-500" style="width: 66.66%"></div>
       </div>
     </div>
 
-    <!-- Chronic Conditions -->
-    <div>
-      <label class="block text-sm font-medium mb-2">Chronic Conditions</label>
-      <div class="grid grid-cols-2 gap-2">
-        <label *ngFor="let condition of chronicConditions" class="flex items-center space-x-2">
-          <input type="checkbox"
-                 (change)="toggleArrayValue('chronic_conditions', condition)"
-                 [checked]="medicalForm.value.chronic_conditions?.includes(condition)">
-          <span>{{ condition }}</span>
-        </label>
+    <!-- Main Card -->
+    <div class="bg-white/95 backdrop-blur-lg shadow-2xl rounded-2xl p-8 transform hover:shadow-3xl transition-all duration-300">
+      
+      <!-- Header with Icon -->
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            Medical Information
+          </h2>
+          <p class="text-gray-500 text-sm mt-1">Help us understand your medical background</p>
+        </div>
+      </div>
+
+      <form [formGroup]="medicalForm" class="space-y-6">
+
+        <!-- Blood Type -->
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700">
+            Blood Type
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <select
+              formControlName="blood_type"
+              class="w-full pl-10 pr-10 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 appearance-none bg-white cursor-pointer"
+            >
+              <option value="">Select Blood Type</option>
+              <option *ngFor="let b of bloodTypes" [value]="b">{{ b }}</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Current Medications -->
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            Current Medications
+          </label>
+          <textarea 
+            formControlName="current_medications"
+            rows="3"
+            maxlength="500"
+            placeholder="List any medications you're currently taking (e.g., Aspirin 100mg daily)"
+            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 resize-none"
+          ></textarea>
+          <div class="flex justify-between text-xs text-gray-400">
+            <span>Optional - Include dosage if possible</span>
+            <span>{{ medicalForm.value.current_medications?.length || 0 }}/500</span>
+          </div>
+        </div>
+
+        <!-- Known Allergies -->
+        <div class="space-y-3">
+          <label class="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            Known Allergies
+          </label>
+          <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-5 border-2 border-red-100">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <label 
+                *ngFor="let allergy of allergies" 
+                class="flex items-center space-x-3 p-3 bg-white rounded-lg hover:bg-red-50 transition-colors duration-200 cursor-pointer group"
+              >
+                <input 
+                  type="checkbox"
+                  (change)="toggleArrayValue('known_allergies', allergy)"
+                  [checked]="medicalForm.value.known_allergies?.includes(allergy)"
+                  class="w-5 h-5 text-red-500 border-gray-300 rounded focus:ring-red-500 cursor-pointer"
+                >
+                <span class="text-sm font-medium text-gray-700 group-hover:text-red-600">{{ allergy }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chronic Conditions -->
+        <div class="space-y-3">
+          <label class="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Chronic Conditions
+          </label>
+          <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl p-5 border-2 border-orange-100">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <label 
+                *ngFor="let condition of chronicConditions" 
+                class="flex items-center space-x-3 p-3 bg-white rounded-lg hover:bg-orange-50 transition-colors duration-200 cursor-pointer group"
+              >
+                <input 
+                  type="checkbox"
+                  (change)="toggleArrayValue('chronic_conditions', condition)"
+                  [checked]="medicalForm.value.chronic_conditions?.includes(condition)"
+                  class="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-500 cursor-pointer"
+                >
+                <span class="text-sm font-medium text-gray-700 group-hover:text-orange-600">{{ condition }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Previous Surgeries -->
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            Previous Surgeries
+          </label>
+          <textarea 
+            formControlName="previous_surgeries"
+            rows="2"
+            placeholder="Describe any previous surgeries (if applicable)"
+            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 resize-none"
+          ></textarea>
+        </div>
+
+        <!-- Family Medical History -->
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Family Medical History
+          </label>
+          <textarea 
+            formControlName="family_medical_history"
+            rows="2"
+            maxlength="300"
+            placeholder="Any hereditary conditions or family health history (optional)"
+            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 resize-none"
+          ></textarea>
+          <div class="flex justify-between text-xs text-gray-400">
+            <span>Optional</span>
+            <span>{{ medicalForm.value.family_medical_history?.length || 0 }}/300</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-between items-center pt-8 border-t">
+          <button
+            type="button"
+            (click)="back()"
+            class="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 flex items-center gap-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </button>
+          
+          <button
+            type="button"
+            (click)="saveAndNext()"
+            class="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
+          >
+            Save & Continue
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Info Card -->
+    <div class="mt-6 bg-blue-50 border-2 border-blue-200 rounded-xl p-4 flex items-start gap-3">
+      <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+      </svg>
+      <div>
+        <h4 class="font-semibold text-blue-900 mb-1">Privacy Notice</h4>
+        <p class="text-sm text-blue-700">
+          Your medical information is confidential and will only be shared with healthcare providers involved in your care.
+        </p>
       </div>
     </div>
 
-    <!-- Previous Surgeries -->
-    <div>
-      <label class="block text-sm font-medium mb-1">Previous Surgeries</label>
-      <textarea formControlName="previous_surgeries"
-                rows="2"
-                class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
-                placeholder="Describe if any"></textarea>
-    </div>
-
-    <!-- Family Medical History -->
-    <div>
-      <label class="block text-sm font-medium mb-1">Family Medical History</label>
-      <textarea formControlName="family_medical_history"
-                rows="2"
-                maxlength="300"
-                class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500"
-                placeholder="Optional"></textarea>
-    </div>
-
-    <!-- Buttons -->
-    <div class="flex justify-between pt-4">
-      <button type="button"
-              (click)="back()"
-              class="px-5 py-2 border rounded hover:bg-gray-100">
-        Back
-      </button>
-
-      <button type="button"
-              (click)="saveAndNext()"
-              class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-        Save & Continue
-      </button>
-    </div>
-
-  </form>
+  </div>
 </div>

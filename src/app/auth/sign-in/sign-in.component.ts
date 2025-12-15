@@ -30,36 +30,49 @@ export class SignInComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  onSubmit() {
-    if (this.signInForm.invalid) return;
+ onSubmit() {
+  if (this.signInForm.invalid) return;
 
-    this.loading = true;
-    this.errorMsg = '';
+  this.loading = true;
+  this.errorMsg = '';
 
-    this.authService.signIn(this.signInForm.value).subscribe({
-      next: (res: any) => {
-        const user = res.user; // updated to match backend
-        const role = user.role;
-        const status = user.onboardingStatus;
+  this.authService.signIn(this.signInForm.value).subscribe({
+    next: (res: any) => {
+      const user = res.user;
+      const role = user.role;
+      const status = user.onboardingStatus;
 
-        if (role === 'PATIENT') {
-          if (status === 'completed') {
-            this.router.navigate(['/patient/dashboard']);
-          } else {
-            this.router.navigate(['/patient/onboarding/step1']);
-          }
+      if (role === 'PATIENT') {
+
+        // ✅ COMPLETED
+        if (status === 'completed') {
+          this.router.navigate(['/patient/dashboard']);
+          return;
         }
 
-        if (role === 'DOCTOR') {
-          this.router.navigate(['/doctor/dashboard']);
-        }
+        // ✅ STEP BASED REDIRECT
+        const stepMap: any = {
+          step01: 'step1',
+          step02: 'step2',
+          step03: 'step3'
+        };
 
-        this.loading = false;
-      },
-      error: (err) => {
-        this.errorMsg = err.error?.error || 'Invalid email or password';
-        this.loading = false;
-      },
-    });
-  }
+        const nextStep = stepMap[status] || 'step1';
+
+        this.router.navigate(['/patient/onboarding', nextStep]);
+      }
+
+      if (role === 'DOCTOR') {
+        this.router.navigate(['/doctor/dashboard']);
+      }
+
+      this.loading = false;
+    },
+    error: (err) => {
+      this.errorMsg = err.error?.error || 'Invalid email or password';
+      this.loading = false;
+    }
+  });
+}
+
 }
